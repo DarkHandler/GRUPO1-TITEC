@@ -10,6 +10,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.org.modulostalleres.databinding.ActivityMainBinding
+import okhttp3.*
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,11 +37,7 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        //Connection to database bitch
-        val mysqlDBK = MySQLDatabaseKotlin
-        mysqlDBK.main()
-        //println("USERNAME:"+mysqlDBK.username);
-
+        fetchJSON()
     }
 
 
@@ -65,7 +63,28 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
+    //buscar orquestacion de servicios
+    fun fetchJSON(){
+        println("Hello world")
+        val url = "http://10.150.45.137:3000/api/personas"
 
+        val request = Request.Builder().url(url).build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+                println("Response:")
+                println(body)
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println(e)
+                println("Failed to execute the request")
+            }
+        })
+
+    }
 
 
 
