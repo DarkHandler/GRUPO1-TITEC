@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.org.modulostalleres.databinding.FragmentFirstBinding
 
@@ -31,9 +32,9 @@ private var _binding: FragmentFirstBinding? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //binding.buttonFirst.setOnClickListener {
-        //    findNavController().navigate(R.id.fragment)
-        //}
+        binding.buttonFirst.setOnClickListener(){
+            findNavController().navigate(R.id.action_FirstFragment_to_vistaTalleresFrag)
+        }
     }
 
 

@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.org.modulostalleres.databinding.FragmentFirstBinding
+import com.org.modulostalleres.databinding.FragmentVistaTalleresBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -13,13 +16,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [VistaTalleres.newInstance] factory method to
+ * Use the [VistaTalleresFrag.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VistaTalleres : Fragment() {
+class VistaTalleresFrag : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var _binding: FragmentVistaTalleresBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +41,16 @@ class VistaTalleres : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vista_talleres, container, false)
+        _binding =  FragmentVistaTalleresBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonVolver.setOnClickListener(){
+            findNavController().navigate(R.id.action_vistaTalleresFrag_to_FirstFragment)
+        }
     }
 
     companion object {
@@ -44,12 +60,12 @@ class VistaTalleres : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment VistaTalleres.
+         * @return A new instance of fragment VistaTalleresFrag.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            VistaTalleres().apply {
+            VistaTalleresFrag().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -10,8 +10,10 @@
         <entry key="..\:/Users/mauri/Desktop/proyecto/GRUPO1-TITEC/app/src/main/res/layout/fragment_vista_talleres.xml" value="0.1640625" />
         <entry key="..\:/Users/mauri/Desktop/proyecto/GRUPO1-TITEC/app/src/main/res/menu/menu_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.38645833333333335" />
-        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_vista_talleres.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_vista_talleres.xml" value="0.31121642969984203" />
       </map>
     </option>
   </component>
