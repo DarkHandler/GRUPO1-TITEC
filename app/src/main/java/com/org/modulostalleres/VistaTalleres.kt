@@ -14,7 +14,12 @@ import okhttp3.Response
 import org.json.JSONArray
 import java.io.IOException
 import android.annotation.SuppressLint
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
+//import com.org.modulostalleres.databinding.ActivityVistaTalleresBinding
 import org.json.JSONObject
+import java.util.*
 
 
 class VistaTalleres : AppCompatActivity() {
@@ -25,12 +30,19 @@ class VistaTalleres : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vista_talleres)
 
-        fetchJSON("talleres") //traer datos
+        val recyclerViewMain = findViewById<RecyclerView>(R.id.recyclerViewMain)
+
+        recyclerViewMain.setBackgroundColor(Color.BLUE)
+        recyclerViewMain.layoutManager = LinearLayoutManager(this)
+        //recyclerViewMain.adapter = MainAdapter()
+
+        fetchJSON("talleres", recyclerViewMain) //traer datos
     }
 
 
-    @SuppressLint("ResourceType")
+    //@SuppressLint("ResourceType")
     fun showTalleres(data: String?){ //rederizar datos en vista
+        /*
         val jsonData =  JSONArray(data)
         val layout = findViewById<RelativeLayout>(R.id.talleres)
 
@@ -59,11 +71,11 @@ class VistaTalleres : AppCompatActivity() {
                 textNombre.layoutParams = rlp2
                 layout.addView(textNombre)
 
-
+                /*
                 //SEGUNDO ATT
                 val rlp3 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
                 rlp3.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                rlp3.addRule(RelativeLayout.BELOW,textNombre.id)
+                rlp3.addRule(RelativeLayout.BELOW,textNombre.id -1)
                 textModalidad.layoutParams = rlp3
                 layout.addView(textModalidad)
 
@@ -71,23 +83,25 @@ class VistaTalleres : AppCompatActivity() {
                 //TERCERO ATT
                 val rlp4 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
                 rlp4.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                rlp4.addRule(RelativeLayout.BELOW,textModalidad.id)
+                rlp4.addRule(RelativeLayout.BELOW,textModalidad.id -1)
                 textArea.layoutParams = rlp4
                 layout.addView(textArea)
 
                 //CUARTO ATT
                 val rlp5 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
                 rlp5.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-                rlp5.addRule(RelativeLayout.BELOW,textArea.id)
+                rlp5.addRule(RelativeLayout.BELOW,textArea.id -1)
                 textFechaInicio.layoutParams = rlp5
                 layout.addView(textFechaInicio)
+
+                 */
 
                 //BOTON
                 val rlp1: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
                     width, height
                 )
                 rlp1.addRule(RelativeLayout.CENTER_HORIZONTAL)
-                rlp1.addRule(RelativeLayout.BELOW, textFechaInicio.id)
+                rlp1.addRule(RelativeLayout.BELOW, textFechaInicio.id -1)
                 btnMasDetalle.layoutParams = rlp1
                 layout.addView(btnMasDetalle)
 
@@ -98,7 +112,7 @@ class VistaTalleres : AppCompatActivity() {
                     RelativeLayout.LayoutParams.WRAP_CONTENT
                 )
                 rlp2.addRule(RelativeLayout.CENTER_HORIZONTAL)
-                rlp2.addRule(RelativeLayout.BELOW, btnMasDetalle.id)
+                rlp2.addRule(RelativeLayout.BELOW, btnMasDetalle.id -1)
                 textNombre.layoutParams = rlp2
                 layout.addView(textNombre)
 
@@ -130,12 +144,12 @@ class VistaTalleres : AppCompatActivity() {
                     width, height
                 )
                 rlp1.addRule(RelativeLayout.CENTER_HORIZONTAL)
-                rlp1.addRule(RelativeLayout.BELOW, textNombre.id)
+                rlp1.addRule(RelativeLayout.BELOW, textNombre.id -1)
                 btnMasDetalle.layoutParams = rlp1
                 layout.addView(btnMasDetalle)
             }
 
-        }
+        }*/
 
     }
 
@@ -150,7 +164,7 @@ class VistaTalleres : AppCompatActivity() {
     }
 
 
-    private fun fetchJSON(path:String){
+    private fun fetchJSON(path:String, recyclerViewMain: RecyclerView){
         val url = "http://10.150.45.137:3000/api/"+path
         val request = Request.Builder().url(url).build()
 
@@ -162,12 +176,24 @@ class VistaTalleres : AppCompatActivity() {
             }
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 val body = response.body?.string()
+                println(body)
+                val gson = GsonBuilder().create()
+                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
                 runOnUiThread {
-                    showTalleres(body)
+                    recyclerViewMain.adapter = MainAdapter(homeFeed)
                 }
+                /*runOnUiThread {
+                    showTalleres(body)
+                }*/
             }
         })
-
     }
 
 }
+
+class HomeFeed(val talleres: List<Taller>)
+
+class Taller(val rut_responsable:String, val tipo:String, val cupos:String, val direccion:String,
+             val nombre_actividad:String, val estado_actividad:String, val descripcion:String,
+             val fecha_inicio:String, val fecha_termino:String, val modalidad:String,
+             val requisitos:String, val area:String)
