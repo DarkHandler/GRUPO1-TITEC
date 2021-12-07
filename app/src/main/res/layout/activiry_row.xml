@@ -25,4 +25,40 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textViewModality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Modalidad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActivityName" />
+
+    <TextView
+        android:id="@+id/textViewArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModality" />
+
+    <TextView
+        android:id="@+id/textViewFechaInicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha Inicio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewArea" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Más detalles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFechaInicio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
