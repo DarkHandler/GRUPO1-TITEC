@@ -4,6 +4,7 @@ package com.org.modulostalleres
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -12,7 +13,11 @@ import okhttp3.Response
 import java.io.IOException
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.SnackbarContentLayout
 import com.google.gson.GsonBuilder
+import com.org.modulostalleres.databinding.ActivityVistaTalleresBinding
 //import com.org.modulostalleres.databinding.ActivityVistaTalleresBinding
 import org.json.JSONObject
 import java.util.*
@@ -20,7 +25,7 @@ import java.util.*
 
 class VistaTalleres : AppCompatActivity() {
 
-    //private lateinit var binding: ActivityVistaTalleresBinding
+    private lateinit var binding: ActivityVistaTalleresBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,26 +45,43 @@ class VistaTalleres : AppCompatActivity() {
         val url = "http://10.150.45.137:3000/api/"+path
         val request = Request.Builder().url(url).build()
 
+        val leceeRecyclerView = LCEERecyclerView(this)
+
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                println(e)
-                println("Failed to execute the request")
+                //println(e)
+                //println("Failed to execute the request")
+                //mostrar la vista error
+                runOnUiThread {
+                    showAlertDialog(recyclerViewMain, "Algo ha ido mal!")
+                }
             }
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 val body = response.body?.string()
                 println(body)
                 val gson = GsonBuilder().create()
                 val homeFeed = HomeFeed(gson.fromJson(body, Array<Taller>::class.java).toList())
-
-                //println(homeFeed)
-
-                runOnUiThread {
-                    recyclerViewMain.adapter = MainAdapter(homeFeed)
+                if(homeFeed.talleres.count() == 0) { //handle if there are no talleres
+                    runOnUiThread{
+                        showAlertDialog(recyclerViewMain, "No hay nada que mostrar")
+                    }
+                }else{
+                    runOnUiThread {
+                        recyclerViewMain.adapter = MainAdapter(homeFeed)
+                    }
                 }
             }
         })
     }
+
+    fun showAlertDialog(view: View, message:String){
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Mensaje de error")
+            .setMessage(message)
+            .show()
+    }
+
 
 }
 
