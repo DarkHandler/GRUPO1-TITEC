@@ -9,10 +9,11 @@
 
     <!--footer-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMain"
-        app:emptyText="Oops! Nothing Here"
-        app:errorText="Something Just Blew Up!"
+
+    <com.org.modulostalleres.LCEERecyclerView
+        android:id="@+id/lcee_recycler_view"
+        app:emptyText="No hay nada que mostrar!"
+        app:errorText="Algo ha ido mal!"
         app:emptyIcon="@drawable/ic_empty_image"
         app:errorIcon="@drawable/ic_error_loading"
         android:layout_width="0dp"
@@ -21,7 +22,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -70,7 +70,7 @@ class LCEERecyclerView constructor(
         ).apply {
             try {
                 errorText = getString(R.styleable.LCEERecyclerView_errorText) ?: "Algo ha ido mal!"
-                emptyText = getString(R.styleable.LCEERecyclerView_emptyText) ?: "No hay nada que mostrar"
+                emptyText = getString(R.styleable.LCEERecyclerView_emptyText) ?: "No hay nada que mostrar!"
                 errorIcon = getResourceId(
                     R.styleable.LCEERecyclerView_errorIcon,
                     R.drawable.ic_error_loading
@@ -95,12 +95,6 @@ class LCEERecyclerView constructor(
         emptyBinding.root.visibility = GONE
 
         errorBinding.root.visibility = VISIBLE
-    }
-
-    fun showLoadingView() {
-        emptyBinding.root.visibility = GONE
-        errorBinding.root.visibility = GONE
-
     }
 
     fun hideAllViews() {
